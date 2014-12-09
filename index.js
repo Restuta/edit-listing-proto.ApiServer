@@ -30,6 +30,22 @@ app.get('/drafts', function(req, res) {
     res.send({'drafts':drafts});
 });
 
+app.get('/drafts/:id', function(req, res) {
+    var id = _.parseInt(req.param('id'));
+
+    var draft = _.find(drafts, {'id': id});
+
+    if (draft) {
+        res.send({
+            'draft': _.find(drafts, {'id': id})
+        }); 
+    } else {
+        res.status(404);
+        res.send();   
+    }
+    
+});
+
 app.post('/drafts', function(req, res) {
 
     var lastDraft = _.max(drafts, function(draft) {
@@ -47,11 +63,7 @@ app.post('/drafts', function(req, res) {
     drafts.push(newDraft);
     res.status(201);
 
-
-    setTimeout(function(){
-        res.send({'draft': newDraft });    
-    }, 3000)
-    
+    res.send({'draft': newDraft });     
 })
 
 app.listen(3008);
