@@ -1,0 +1,16 @@
+{
+  "name": "Ingenio",
+  "version": "1.0.0",
+  "description": "test api server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.10.4",
+    "lodash": "^2.4.1",
+    "morgan": "^1.5.0"
+  }
+}
