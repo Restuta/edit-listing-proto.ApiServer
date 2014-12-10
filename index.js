@@ -64,6 +64,83 @@ app.post('/drafts', function(req, res) {
     res.status(201);
 
     res.send({'draft': newDraft });     
-})
+});
+
+app.get('/listingCategories', function(req, res) {
+    res.send({
+        'listingCategories' : [{
+            'id': 1,
+            'name': 'Relationship Coaching',
+            'subCategories' : [10, 11, 12]
+        },{
+            'id': 2,
+            'name': 'Health and Wellness',
+            'subCategories' : [20, 21, 22, 23, 24]
+        }],
+        'subCategories' : [{
+                'id' : 10,
+                'name' : 'Couples'
+            },{
+                'id' : 11,
+                'name' : 'Singles'
+            },{
+                'id' : 12,
+                'name' : 'Divorced Singles'
+            },{
+                'id' : 20,
+                'name' : 'Nutrition'
+            },{
+                'id' : 21,
+                'name' : 'Career'
+            },{
+                'id' : 22,
+                'name' : 'Pregnancy'
+            },{
+                'id' : 23,
+                'name' : 'Eating Disorder'
+            },{
+                'id' : 24,
+                'name' : 'Weightloss'
+            }]
+    })
+});
+
+app.get('/listingCategories-inline', function(req, res) {
+    res.send({
+        'listingCategories' : [{
+            'id': 1,
+            'name': 'Relationship Coaching',
+            'subCategories' : [{
+                'id' : 10,
+                'name' : 'Couples'
+            },{
+                'id' : 11,
+                'name' : 'Singles'
+            },{
+                'id' : 12,
+                'name' : 'Divorced Singles'
+            }]
+        },{
+            'id': 2,
+            'name': 'Health and Wellness',
+            'subCategories' : [{
+                'id' : 20,
+                'name' : 'Nutrition'
+            },{
+                'id' : 21,
+                'name' : 'Career'
+            },{
+                'id' : 22,
+                'name' : 'Pregnancy'
+            },{
+                'id' : 23,
+                'name' : 'Eating Disorder'
+            },{
+                'id' : 24,
+                'name' : 'Weightloss'
+            }]
+        }]
+    })
+});
 
 app.listen(3008);
