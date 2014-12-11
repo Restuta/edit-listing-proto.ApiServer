@@ -36,6 +36,11 @@ app.get('/drafts/:id', function(req, res) {
     var draft = _.find(drafts, {'id': id});
 
     if (draft) {
+        // setTimeout(function(){
+        //     res.send({
+        //     'draft': _.find(drafts, {'id': id})
+        // }); 
+        // }, 3000)
         res.send({
             'draft': _.find(drafts, {'id': id})
         }); 
@@ -106,41 +111,45 @@ app.get('/listingCategories', function(req, res) {
 });
 
 app.get('/listingCategories-inline', function(req, res) {
-    res.send({
-        'listingCategories' : [{
-            'id': 1,
-            'name': 'Relationship Coaching',
-            'subCategories' : [{
-                'id' : 10,
-                'name' : 'Couples'
+
+    setTimeout(
+        function() {res.send({
+            'listingCategories' : [{
+                'id': 1,
+                'name': 'Relationship Coaching',
+                'subCategories' : [{
+                    'id' : 10,
+                    'name' : 'Couples'
+                },{
+                    'id' : 11,
+                    'name' : 'Singles'
+                },{
+                    'id' : 12,
+                    'name' : 'Divorced Singles'
+                }]
             },{
-                'id' : 11,
-                'name' : 'Singles'
-            },{
-                'id' : 12,
-                'name' : 'Divorced Singles'
+                'id': 2,
+                'name': 'Health and Wellness',
+                'subCategories' : [{
+                    'id' : 20,
+                    'name' : 'Nutrition'
+                },{
+                    'id' : 21,
+                    'name' : 'Career'
+                },{
+                    'id' : 22,
+                    'name' : 'Pregnancy'
+                },{
+                    'id' : 23,
+                    'name' : 'Eating Disorder'
+                },{
+                    'id' : 24,
+                    'name' : 'Weightloss'
+                }]
             }]
-        },{
-            'id': 2,
-            'name': 'Health and Wellness',
-            'subCategories' : [{
-                'id' : 20,
-                'name' : 'Nutrition'
-            },{
-                'id' : 21,
-                'name' : 'Career'
-            },{
-                'id' : 22,
-                'name' : 'Pregnancy'
-            },{
-                'id' : 23,
-                'name' : 'Eating Disorder'
-            },{
-                'id' : 24,
-                'name' : 'Weightloss'
-            }]
-        }]
-    })
-});
+        })
+},000);
+    });
+    
 
 app.listen(3008);
