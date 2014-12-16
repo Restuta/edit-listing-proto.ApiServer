@@ -1,7 +1,7 @@
-var express = require('express');
-var app = express();
-var router = express.Router();
-var _ = require('lodash');
+var express = require('express')
+    ,app = express()
+    ,router = express.Router()
+    ,_ = require('lodash');
 
 //CORS
 app.use(function(req, res, next) {
@@ -36,19 +36,28 @@ app.get('/drafts/:id', function(req, res) {
     var draft = _.find(drafts, {'id': id});
 
     if (draft) {
-        // setTimeout(function(){
-        //     res.send({
-        //     'draft': _.find(drafts, {'id': id})
-        // }); 
-        // }, 3000)
-        res.send({
+        setTimeout(function(){
+            res.send({
             'draft': _.find(drafts, {'id': id})
         }); 
+        }, 1000)
+        // res.send({
+        //     'draft': _.find(drafts, {'id': id})
+        // }); 
     } else {
         res.status(404);
         res.send();   
     }
     
+});
+
+app.put('/drafts/:id', function(req, res){
+    var id = _.parseInt(req.param('id'));
+
+    var draftToUpdate = _.find(drafts, {'id': id});
+
+    res.status(500);
+    res.send();   
 });
 
 app.post('/drafts', function(req, res) {
@@ -148,7 +157,7 @@ app.get('/listingCategories-inline', function(req, res) {
                 }]
             }]
         })
-},000);
+},1000);
     });
     
 
