@@ -1,7 +1,12 @@
 var express = require('express')
-    ,app = express()
-    ,router = express.Router()
-    ,_ = require('lodash');
+    , app = express()
+    , router = express.Router()
+    , _ = require('lodash')
+    , bodyParser = require('body-parser')
+    ;
+
+//to parse json from incoming requests to req.body
+app.use(bodyParser.json());
 
 //CORS
 app.use(function(req, res, next) {
@@ -56,8 +61,11 @@ app.put('/drafts/:id', function(req, res){
 
     var draftToUpdate = _.find(drafts, {'id': id});
 
-    res.status(500);
-    res.send();   
+    var draft = req.body.draft;
+    draftToUpdate.name = draft.name;
+    draftToUpdate.minuteRate = draft.minuteRate;
+
+    res.status(200).send({'draft' : draftToUpdate});   
 });
 
 app.post('/drafts', function(req, res) {
@@ -75,9 +83,7 @@ app.post('/drafts', function(req, res) {
     }
 
     drafts.push(newDraft);
-    res.status(201);
-
-    res.send({'draft': newDraft });     
+    res.status(201).send({'draft': newDraft });     
 });
 
 app.get('/listingCategories', function(req, res) {
