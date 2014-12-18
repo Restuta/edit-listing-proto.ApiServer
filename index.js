@@ -64,8 +64,10 @@ app.put('/drafts/:id', function(req, res){
     var draft = req.body.draft;
     draftToUpdate.name = draft.name;
     draftToUpdate.minuteRate = draft.minuteRate;
-
-    res.status(200).send({'draft' : draftToUpdate});   
+    
+    setTimeout(function() {
+        res.status(200).send({'draft' : draftToUpdate});
+    }, 2000);
 });
 
 app.post('/drafts', function(req, res) {
