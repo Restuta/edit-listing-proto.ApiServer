@@ -1,7 +1,12 @@
-var express = require('express');
-var app = express();
-var router = express.Router();
-var _ = require('lodash');
+var express = require('express')
+    , app = express()
+    , router = express.Router()
+    , _ = require('lodash')
+    , bodyParser = require('body-parser')
+    ;
+
+//to parse json from incoming requests to req.body
+app.use(bodyParser.json());
 
 //CORS
 app.use(function(req, res, next) {
@@ -36,19 +41,33 @@ app.get('/drafts/:id', function(req, res) {
     var draft = _.find(drafts, {'id': id});
 
     if (draft) {
-        // setTimeout(function(){
-        //     res.send({
-        //     'draft': _.find(drafts, {'id': id})
-        // }); 
-        // }, 3000)
-        res.send({
+        setTimeout(function(){
+            res.send({
             'draft': _.find(drafts, {'id': id})
         }); 
+        }, 1000)
+        // res.send({
+        //     'draft': _.find(drafts, {'id': id})
+        // }); 
     } else {
         res.status(404);
         res.send();   
     }
     
+});
+
+app.put('/drafts/:id', function(req, res){
+    var id = _.parseInt(req.param('id'));
+
+    var draftToUpdate = _.find(drafts, {'id': id});
+
+    var draft = req.body.draft;
+    draftToUpdate.name = draft.name;
+    draftToUpdate.minuteRate = draft.minuteRate;
+    
+    setTimeout(function() {
+        res.status(200).send({'draft' : draftToUpdate});
+    }, 2000);
 });
 
 app.post('/drafts', function(req, res) {
@@ -66,9 +85,7 @@ app.post('/drafts', function(req, res) {
     }
 
     drafts.push(newDraft);
-    res.status(201);
-
-    res.send({'draft': newDraft });     
+    res.status(201).send({'draft': newDraft });     
 });
 
 
@@ -186,7 +203,7 @@ app.get('/listingCategories-inline', function(req, res) {
                 }]
             }]
         })
-},000);
+},1000);
     });
     
 
