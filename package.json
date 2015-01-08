@@ -10,8 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.10.0",
+    "chalk": "^0.5.1",
     "express": "^4.10.4",
     "lodash": "^2.4.1",
+    "minimist": "^1.1.0",
     "morgan": "^1.5.0"
   }
 }

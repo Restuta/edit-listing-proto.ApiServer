@@ -1,12 +1,25 @@
 var express = require('express')
     , app = express()
+    , logger = require('./logger')
     , router = express.Router()
     , _ = require('lodash')
     , bodyParser = require('body-parser')
+    , argv = require('minimist')(process.argv.slice(2))
+    , chalk = require('chalk')
     ;
+
+
+
+var apiLatency = 0; //in milliseconds
+
+if (argv.latency) {
+    apiLatency = argv.latency;
+
+}
 
 //to parse json from incoming requests to req.body
 app.use(bodyParser.json());
+app.use(logger); //custom logger to log all requests made to console
 
 //CORS
 app.use(function(req, res, next) {
@@ -45,7 +58,7 @@ app.get('/drafts/:id', function(req, res) {
             res.send({
             'draft': _.find(drafts, {'id': id})
         }); 
-        }, 1000)
+        }, apiLatency)
         // res.send({
         //     'draft': _.find(drafts, {'id': id})
         // }); 
@@ -67,7 +80,7 @@ app.put('/drafts/:id', function(req, res){
     
     setTimeout(function() {
         res.status(200).send({'draft' : draftToUpdate});
-    }, 2000);
+    }, apiLatency);
 });
 
 app.post('/drafts', function(req, res) {
@@ -166,45 +179,54 @@ app.get('/listingCategories', function(req, res) {
 });
 
 app.get('/listingCategories-inline', function(req, res) {
-
     setTimeout(
-        function() {res.send({
-            'listingCategories' : [{
-                'id': 1,
-                'name': 'Relationship Coaching',
-                'subCategories' : [{
-                    'id' : 10,
-                    'name' : 'Couples'
+        function() { 
+            res.send({
+                'listingCategories' : [{
+                    'id': 1,
+                    'name': 'Relationship Coaching',
+                    'subCategories' : [{
+                        'id' : 10,
+                        'name' : 'Couples'
+                    },{
+                        'id' : 11,
+                        'name' : 'Singles'
+                    },{
+                        'id' : 12,
+                        'name' : 'Divorced Singles'
+                    }]
                 },{
-                    'id' : 11,
-                    'name' : 'Singles'
-                },{
-                    'id' : 12,
-                    'name' : 'Divorced Singles'
+                    'id': 2,
+                    'name': 'Health and Wellness',
+                    'subCategories' : [{
+                        'id' : 20,
+                        'name' : 'Nutrition'
+                    },{
+                        'id' : 21,
+                        'name' : 'Career'
+                    },{
+                        'id' : 22,
+                        'name' : 'Pregnancy'
+                    },{
+                        'id' : 23,
+                        'name' : 'Eating Disorder'
+                    },{
+                        'id' : 24,
+                        'name' : 'Weightloss'
+                    }]
                 }]
-            },{
-                'id': 2,
-                'name': 'Health and Wellness',
-                'subCategories' : [{
-                    'id' : 20,
-                    'name' : 'Nutrition'
-                },{
-                    'id' : 21,
-                    'name' : 'Career'
-                },{
-                    'id' : 22,
-                    'name' : 'Pregnancy'
-                },{
-                    'id' : 23,
-                    'name' : 'Eating Disorder'
-                },{
-                    'id' : 24,
-                    'name' : 'Weightloss'
-                }]
-            }]
-        })
-},1000);
-    });
+            })
+        }, 
+        apiLatency);
+});
     
 
-app.listen(3008);
+app.listen(3008, function() {
+    if (apiLatency > 0) {
+        console.log(chalk.green('Running API Server with artificial latency: ') 
+        +  chalk.grey(apiLatency + 'ms...'));    
+    } else {
+        console.log(chalk.green('Running API Server...'))
+    }
+    
+});
