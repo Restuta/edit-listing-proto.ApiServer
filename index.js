@@ -138,7 +138,6 @@ app.get('/listingCategories-flat', function(req, res) {
     })
 });
 
-
 app.get('/listingCategories', function(req, res) {
      res.send({
          'listingCategories' : [{
@@ -218,6 +217,77 @@ app.get('/listingCategories-inline', function(req, res) {
             })
         }, 
         apiLatency);
+});
+
+app.get('/specializations', function(req, res) {
+    res.send({
+        'specializations' : [{
+            'id': 1,
+            'value': 'spec1'
+        },{
+            'id': 2,
+            'value': 'spec2'
+        },{
+            'id': 3,
+            'value': 'spec3'
+        },{
+            'id': 4,
+            'value': 'spec4'
+        },{
+            'id': 5,
+            'value': 'spec5'
+        }]
+    })
+});
+
+
+app.get('/skills', function(req, res) {
+    res.send({
+        'skills' : [{
+            'id': 1,
+            'value': 'skill1'
+        },{
+            'id': 2,
+            'value': 'skill2'
+        },{
+            'id': 3,
+            'value': 'skill3'
+        },{
+            'id': 4,
+            'value': 'skill4'
+        },{
+            'id': 5,
+            'value': 'skill5'
+        },{
+            'id': 6,
+            'value': 'skill6'
+        },{
+            'id': 7,
+            'value': 'skill7'
+        }]
+    })
+});
+
+
+app.get('/languages', function(req, res) {
+    res.send({
+        'languages' : [{
+            'id': 1,
+            'value': 'English'
+        },{
+            'id': 2,
+            'value': 'Ukrainian'
+        },{
+            'id': 3,
+            'value': 'Sanskrit'
+        },{
+            'id': 4,
+            'value': 'French'
+        },{
+            'id': 5,
+            'value': 'Latin'
+        }]
+    })
 });
     
 
