@@ -9,12 +9,10 @@ var express = require('express')
     ;
 
 
-
 var apiLatency = 0; //in milliseconds
 
 if (argv.latency) {
     apiLatency = argv.latency;
-
 }
 
 //to parse json from incoming requests to req.body
