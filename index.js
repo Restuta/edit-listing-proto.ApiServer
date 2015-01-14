@@ -10,6 +10,7 @@ var express = require('express')
 
 
 var apiLatency = 0; //in milliseconds
+var port = 3008;
 
 if (argv.latency) {
     apiLatency = argv.latency;
@@ -217,84 +218,75 @@ app.get('/listingCategories-inline', function(req, res) {
         apiLatency);
 });
 
-app.get('/specializations', function(req, res) {
-    res.send({
+app.get('/specializations-skills-languages', function(req, res){
+    var response = {
         'specializations' : [{
-            'id': 1,
-            'value': 'spec1'
-        },{
-            'id': 2,
-            'value': 'spec2'
-        },{
-            'id': 3,
-            'value': 'spec3'
-        },{
-            'id': 4,
-            'value': 'spec4'
-        },{
-            'id': 5,
-            'value': 'spec5'
-        }]
-    })
-});
-
-
-app.get('/skills', function(req, res) {
-    res.send({
+                'id': 1,
+                'value': 'spec1'
+            },{
+                'id': 2,
+                'value': 'spec2'
+            },{
+                'id': 3,
+                'value': 'spec3'
+            },{
+                'id': 4,
+                'value': 'spec4'
+            },{
+                'id': 5,
+                'value': 'spec5'
+            }],
         'skills' : [{
-            'id': 1,
-            'value': 'skill1'
-        },{
-            'id': 2,
-            'value': 'skill2'
-        },{
-            'id': 3,
-            'value': 'skill3'
-        },{
-            'id': 4,
-            'value': 'skill4'
-        },{
-            'id': 5,
-            'value': 'skill5'
-        },{
-            'id': 6,
-            'value': 'skill6'
-        },{
-            'id': 7,
-            'value': 'skill7'
-        }]
-    })
-});
-
-
-app.get('/languages', function(req, res) {
-    res.send({
+                'id': 1,
+                'value': 'skill1'
+            },{
+                'id': 2,
+                'value': 'skill2'
+            },{
+                'id': 3,
+                'value': 'skill3'
+            },{
+                'id': 4,
+                'value': 'skill4'
+            },{
+                'id': 5,
+                'value': 'skill5'
+            },{
+                'id': 6,
+                'value': 'skill6'
+            },{
+                'id': 7,
+                'value': 'skill7'
+            }],
         'languages' : [{
-            'id': 1,
-            'value': 'English'
-        },{
-            'id': 2,
-            'value': 'Ukrainian'
-        },{
-            'id': 3,
-            'value': 'Sanskrit'
-        },{
-            'id': 4,
-            'value': 'French'
-        },{
-            'id': 5,
-            'value': 'Latin'
-        }]
-    })
+                'id': 1,
+                'value': 'English'
+            },{
+                'id': 2,
+                'value': 'Ukrainian'
+            },{
+                'id': 3,
+                'value': 'Sanskrit'
+            },{
+                'id': 4,
+                'value': 'French'
+            },{
+                'id': 5,
+                'value': 'Latin'
+            }]
+    }
+
+    res.send(response);
 });
     
 
-app.listen(3008, function() {
+app.listen(port, function() {
     if (apiLatency > 0) {
         console.log(chalk.green('Running API Server with artificial latency: ') 
-        +  chalk.grey(apiLatency + 'ms...'));    
+        +  chalk.grey(apiLatency + 'ms...')
+        + ' at ' + chalk.yellow(port) + ' ...');    
     } else {
-        console.log(chalk.green('Running API Server...'))
+        console.log(chalk.green('Running API Server at :' + chalk.yellow(port) + ' ...'))
     }
     
 });
