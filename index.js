@@ -238,25 +238,43 @@ app.get('/specializations-skills-languages', function(req, res){
             }],
         'skills' : [{
                 'id': 1,
-                'value': 'skill1'
+                'value': 'Angel readings'
             },{
                 'id': 2,
-                'value': 'skill2'
+                'value': 'Chinese astrology'
             },{
                 'id': 3,
-                'value': 'skill3'
+                'value': 'Mayan astrology'
             },{
                 'id': 4,
-                'value': 'skill4'
+                'value': 'Veidc astrology'
             },{
                 'id': 5,
-                'value': 'skill5'
+                'value': 'Channelling'
             },{
                 'id': 6,
-                'value': 'skill6'
+                'value': 'Clairaudient'
             },{
                 'id': 7,
-                'value': 'skill7'
+                'value': 'Clairsentient'
+            },{
+                'id': 8,
+                'value': 'Clairvoyant'
+            },{
+                'id': 9,
+                'value': 'Crystals'
+            },{
+                'id': 10,
+                'value': 'Dream Interpretation'
+            },{
+                'id': 11,
+                'value': 'Empath'
+            },{
+                'id': 12,
+                'value': 'Feng Shui'
+            },{
+                'id': 13,
+                'value': 'I-Ching'
             }],
         'languages' : [{
                 'id': 1,
