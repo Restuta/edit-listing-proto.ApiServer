@@ -8,13 +8,14 @@ var express = require('express')
     , chalk = require('chalk')
     ;
 
-
-var apiLatency = 0; //in milliseconds
 var port = 3008;
 
-if (argv.latency) {
-    apiLatency = argv.latency;
-}
+logger.setOptions({
+    apiLatency: argv.latency,
+    groupRequestsMadeInBetween: argv.grouping
+});
+
+var apiLatency = argv.latency || 0;
 
 //to parse json from incoming requests to req.body
 app.use(bodyParser.json());
@@ -53,14 +54,9 @@ app.get('/drafts/:id', function(req, res) {
     var draft = _.find(drafts, {'id': id});
 
     if (draft) {
-        setTimeout(function(){
-            res.send({
+        res.send({
             'draft': _.find(drafts, {'id': id})
-        }); 
-        }, apiLatency)
-        // res.send({
-        //     'draft': _.find(drafts, {'id': id})
-        // }); 
+        });
     } else {
         res.status(404);
         res.send();   
@@ -77,9 +73,7 @@ app.put('/drafts/:id', function(req, res){
     draftToUpdate.name = draft.name;
     draftToUpdate.minuteRate = draft.minuteRate;
     
-    setTimeout(function() {
-        res.status(200).send({'draft' : draftToUpdate});
-    }, apiLatency);
+    res.status(200).send({'draft' : draftToUpdate});
 });
 
 app.post('/drafts', function(req, res) {
@@ -102,7 +96,7 @@ app.post('/drafts', function(req, res) {
 
 
 app.get('/listingCategories-flat', function(req, res) {
-    res.send({
+    var response = {
         'listingCategories' : [
             {'id':589,'name':'Dream Interpretation','parentId':198},
             {'id':636,'name':'Life Questions','parentId':198},
@@ -134,11 +128,13 @@ app.get('/listingCategories-flat', function(req, res) {
             {'id':635,'name':'Love & Relationships','parentId':195},
             {'id':196,'name':'Astrology Readings','parentId':195}
         ]
-    })
+    };
+
+    res.send(response);
 });
 
 app.get('/listingCategories', function(req, res) {
-     res.send({
+    var response = {
          'listingCategories' : [{
              'id': 1,
              'name': 'Relationship Coaching',
@@ -173,13 +169,13 @@ app.get('/listingCategories', function(req, res) {
                  'id' : 24,
                  'name' : 'Weightloss'
              }]
-     })
+     };
+
+    res.send(response);
 });
 
 app.get('/listingCategories-inline', function(req, res) {
-    setTimeout(
-        function() { 
-            res.send({
+    var response = {
                 'listingCategories' : [{
                     'id': 1,
                     'name': 'Relationship Coaching',
@@ -213,9 +209,9 @@ app.get('/listingCategories-inline', function(req, res) {
                         'name' : 'Weightloss'
                     }]
                 }]
-            })
-        }, 
-        apiLatency);
+            }
+
+    res.send(response);
 });
 
 app.get('/specializations-skills-languages', function(req, res){
@@ -300,11 +296,13 @@ app.get('/specializations-skills-languages', function(req, res){
 
 app.listen(port, function() {
     if (apiLatency > 0) {
-        console.log(chalk.green('Running API Server with artificial latency: ') 
-        +  chalk.grey(apiLatency + 'ms...')
-        + ' at ' + chalk.yellow(port) + ' ...');    
+        console.log(chalk.green('Running API Server with artificial latency ') 
+            +  chalk.grey(apiLatency + 'ms')
+            + ' at ' 
+            + chalk.magenta('localhost:' + port + '...'));
     } else {
-        console.log(chalk.green('Running API Server at :' + chalk.yellow(port) + ' ...'))
+        console.log(chalk.green('Running API Server at ') 
+            + chalk.magenta('localhost:' + port + '...'));
     }
     
 });
