@@ -87,9 +87,28 @@ app.put('/drafts/:id', function(req, res){
     var draftToUpdate = _.find(drafts, {'id': id});
 
     var draft = req.body.draft;
-    draftToUpdate.name = draft.name;
     draftToUpdate.minuteRate = draft.minuteRate;
-    
+
+
+    draftToUpdate.primaryPhoneNumber = draft.primaryPhoneNumber,
+    draftToUpdate.categoryId = draft.categoryId,
+    draftToUpdate.chatEnabled = draft.chatEnabled,
+    draftToUpdate.minuteRate = draft.minuteRate,
+    draftToUpdate.supportBonus = draft.supportBonus,
+
+    draftToUpdate.title = draft.title,
+    draftToUpdate.advisorName = draft.advisorName,
+    draftToUpdate.salesPitch = draft.salesPitch,
+    draftToUpdate.profileImage = draft.profileImage,
+
+    draftToUpdate.specializedSituations = draft.specializedSituations,
+    draftToUpdate.skills = draft.skills,
+    draftToUpdate.languages = draft.languages,
+
+    draftToUpdate.approach = draft.approach,
+    draftToUpdate.backgroundInfo = draft.backgroundInfo,
+    draftToUpdate.HTMLDescription = draft.HTMLDescription
+
     res.status(200).send({'draft' : draftToUpdate});
 });
 
