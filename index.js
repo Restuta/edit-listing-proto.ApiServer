@@ -31,8 +31,25 @@ app.use(function(req, res, next) {
 
 var drafts = [{
     id: 1,
-    name: 'First listing',
-    minuteRate: 2.99
+    primaryPhoneNumber: '4259999989',
+    categoryId: 642,
+    chatEnabled: true,
+    minuteRate: 2.99,
+    supportBonus: true,
+
+    title: 'Sample title1',
+    advisorName: 'James Bond',
+    salesPitch: 'Sample sales pitch 1',
+    profileImage: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
+
+    //todo:
+    specializedSituations: [{id:1},{id:2}],   //array of numbers
+    skills: [{id:1},{id:6},{id:12}],  //array of numbers
+    languages: [{id:1},{id:2},{id:3}],   //array of numbers
+
+    approach: 'My sample approach',
+    backgroundInfo: 'My background info',
+    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }, {
     id: 2,
     name: 'Second listing',
