@@ -52,8 +52,18 @@ var drafts = [{
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }, {
     id: 2,
-    name: 'Second listing',
-    minuteRate: 5.88
+    primaryPhoneNumber: '(425) 999-99-89',
+    categoryId: 642,
+    advisorName: 'Muthu Vynogradenko',
+
+    //todo:
+    // specializedSituations: [{id:1},{id:2}],   //array of numbers
+    // skills: [{id:1},{id:6},{id:12}],  //array of numbers
+    // languages: [{id:1},{id:2},{id:3}],   //array of numbers
+
+    approach: '',
+    backgroundInfo: '',
+    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }];
 
 
