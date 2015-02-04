@@ -55,6 +55,7 @@ var drafts = [{
     primaryPhoneNumber: '(425) 999-99-89',
     categoryId: 642,
     advisorName: 'Muthu Vynogradenko',
+    title: '',
 
     //todo:
     // specializedSituations: [{id:1},{id:2}],   //array of numbers
@@ -95,29 +96,9 @@ app.put('/drafts/:id', function(req, res){
     var id = _.parseInt(req.param('id'));
 
     var draftToUpdate = _.find(drafts, {'id': id});
-
     var draft = req.body.draft;
-    draftToUpdate.minuteRate = draft.minuteRate;
 
-
-    draftToUpdate.primaryPhoneNumber = draft.primaryPhoneNumber,
-    draftToUpdate.categoryId = draft.categoryId,
-    draftToUpdate.chatEnabled = draft.chatEnabled,
-    draftToUpdate.minuteRate = draft.minuteRate,
-    draftToUpdate.supportBonus = draft.supportBonus,
-
-    draftToUpdate.title = draft.title,
-    draftToUpdate.advisorName = draft.advisorName,
-    draftToUpdate.salesPitch = draft.salesPitch,
-    draftToUpdate.profileImage = draft.profileImage,
-
-    draftToUpdate.specializedSituations = draft.specializedSituations,
-    draftToUpdate.skills = draft.skills,
-    draftToUpdate.languages = draft.languages,
-
-    draftToUpdate.approach = draft.approach,
-    draftToUpdate.backgroundInfo = draft.backgroundInfo,
-    draftToUpdate.HTMLDescription = draft.HTMLDescription
+    _.merge(draftToUpdate, draft);
 
     res.status(200).send({'draft' : draftToUpdate});
 });
