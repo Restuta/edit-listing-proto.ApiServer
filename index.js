@@ -16,6 +16,7 @@ logger.setOptions({
 });
 
 var apiLatency = argv.latency || 0;
+var grouping = argv.grouping || 200;
 
 //to parse json from incoming requests to req.body
 app.use(bodyParser.json());
@@ -326,10 +327,15 @@ app.listen(port, function() {
         console.log(chalk.green('Running API Server with artificial latency ') 
             +  chalk.grey(apiLatency + 'ms')
             + ' at ' 
-            + chalk.magenta('localhost:' + port + '...'));
+            + chalk.yellow('localhost:' + port + '...'));
     } else {
         console.log(chalk.green('Running API Server at ') 
-            + chalk.magenta('localhost:' + port + '...'));
+            + chalk.yellow('localhost:' + port + '...'));
+    }
+
+    if (grouping > 0) {
+        console.log(chalk.grey(' grouping requests happened in-between ')
+            + chalk.white(grouping + 'ms'));
     }
     
 });
