@@ -78,7 +78,7 @@ app.get('/drafts', function(req, res) {
 });
 
 app.get('/drafts/:id', function(req, res) {
-    var id = _.parseInt(req.param('id'));
+    var id = _.parseInt(req.params.id);
 
     var draft = _.find(drafts, {'id': id});
 
