@@ -243,8 +243,8 @@ app.get('/specializations-skills-languages', function(req, res){
 app.get('/domain-info', function(req, res){
     var response = { 
         'domainInfo': {
-            'ConnectionCharges' : 0.2,
-            'DomainFeePercentage' : '30'
+            'connectionCharges' : 0.2,
+            'domainFeePercentage' : '30'
         }
     };
 
