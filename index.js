@@ -123,7 +123,7 @@ app.post('/drafts', function(req, res) {
 });
 
 
-app.get('/listingCategories-flat', function(req, res) {
+app.get('/listing-categories', function(req, res) {
     var response = {
         'listingCategories' : [
             {'id':589,'name':'Dream Interpretation','parentId':198},
@@ -157,87 +157,6 @@ app.get('/listingCategories-flat', function(req, res) {
             {'id':196,'name':'Astrology Readings','parentId':195}
         ]
     };
-
-    res.send(response);
-});
-
-app.get('/listingCategories', function(req, res) {
-    var response = {
-         'listingCategories' : [{
-             'id': 1,
-             'name': 'Relationship Coaching',
-             'subCategories' : [10, 11, 12]
-         },{
-             'id': 2,
-             'name': 'Health and Wellness',
-             'subCategories' : [20, 21, 22, 23, 24]
-         }],
-         'subCategories' : [{
-                 'id' : 10,
-                 'name' : 'Couples'
-             },{
-                 'id' : 11,
-                 'name' : 'Singles'
-             },{
-                 'id' : 12,
-                 'name' : 'Divorced Singles'
-             },{
-                 'id' : 20,
-                 'name' : 'Nutrition'
-             },{
-                 'id' : 21,
-                 'name' : 'Career'
-             },{
-                 'id' : 22,
-                 'name' : 'Pregnancy'
-             },{
-                 'id' : 23,
-                 'name' : 'Eating Disorder'
-             },{
-                 'id' : 24,
-                 'name' : 'Weightloss'
-             }]
-     };
-
-    res.send(response);
-});
-
-app.get('/listingCategories-inline', function(req, res) {
-    var response = {
-                'listingCategories' : [{
-                    'id': 1,
-                    'name': 'Relationship Coaching',
-                    'subCategories' : [{
-                        'id' : 10,
-                        'name' : 'Couples'
-                    },{
-                        'id' : 11,
-                        'name' : 'Singles'
-                    },{
-                        'id' : 12,
-                        'name' : 'Divorced Singles'
-                    }]
-                },{
-                    'id': 2,
-                    'name': 'Health and Wellness',
-                    'subCategories' : [{
-                        'id' : 20,
-                        'name' : 'Nutrition'
-                    },{
-                        'id' : 21,
-                        'name' : 'Career'
-                    },{
-                        'id' : 22,
-                        'name' : 'Pregnancy'
-                    },{
-                        'id' : 23,
-                        'name' : 'Eating Disorder'
-                    },{
-                        'id' : 24,
-                        'name' : 'Weightloss'
-                    }]
-                }]
-            }
 
     res.send(response);
 });
