@@ -239,6 +239,17 @@ app.get('/specializations-skills-languages', function(req, res){
 
     res.send(response);
 });
+
+app.get('/domain-info', function(req, res){
+    var response = { 
+        'domainInfo': {
+            'ConnectionCharges' : 0.2,
+            'DomainFeePercentage' : '30'
+        }
+    };
+
+    res.send(response);
+});
     
 
 app.listen(port, function() {
