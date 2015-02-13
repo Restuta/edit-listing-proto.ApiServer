@@ -74,6 +74,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/drafts', function(req, res) {
+    res.status(401);
     res.send({'drafts':drafts});
 });
 
