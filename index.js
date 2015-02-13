@@ -114,8 +114,13 @@ app.post('/drafts', function(req, res) {
 
     var newDraft = {
         id: newId,
-        name: '',
-        minuteRate: 0
+        primaryPhoneNumber: '(425) 999-99-89',
+        categoryId: 0,
+        advisorName: 'Boris Shumyater',
+        title: '',
+        approach: '',
+        backgroundInfo: '',
+        HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
     }
 
     drafts.push(newDraft);
