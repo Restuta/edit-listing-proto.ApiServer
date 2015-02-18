@@ -41,6 +41,7 @@ var drafts = [{
     title: 'Sample title1',
     advisorName: 'James Bond',
     salesPitch: 'Sample sales pitch 1',
+    //use HTML from http://www.keen.com/psychic-readings/love-relationships/mignon-divine-medium/6604438 as a test =)
     profileImage: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
 
     //todo:
