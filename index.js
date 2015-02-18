@@ -123,7 +123,7 @@ app.get('/listings/:id', function(req, res) {
 
     if (listing) {
         res.send({
-            'draft': _.find(listings, {'id': id})
+            'listing': _.find(listings, {'id': id})
         });
     } else {
         res.status(404);
