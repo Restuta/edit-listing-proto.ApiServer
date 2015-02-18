@@ -68,6 +68,44 @@ var drafts = [{
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }];
 
+var listings = [{
+    id: 1,
+    primaryPhoneNumber: '4259999989',
+    categoryId: 642,
+    chatEnabled: true,
+    minuteRate: 2.99,
+    supportBonus: true,
+
+    title: 'Sample title1',
+    advisorName: 'James Bond',
+    salesPitch: 'Sample sales pitch 1',
+    profileImage: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
+
+    //todo:
+    specializedSituations: [{id:1},{id:2}],   //array of numbers
+    skills: [{id:1},{id:6},{id:12}],  //array of numbers
+    languages: [{id:1},{id:2},{id:3}],   //array of numbers
+
+    approach: 'My sample approach',
+    backgroundInfo: 'My background info',
+    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
+}, {
+    id: 2,
+    primaryPhoneNumber: '(425) 999-99-89',
+    categoryId: 642,
+    advisorName: 'Muthu Vynogradenko',
+    title: '',
+
+    //todo:
+    // specializedSituations: [{id:1},{id:2}],   //array of numbers
+    // skills: [{id:1},{id:6},{id:12}],  //array of numbers
+    // languages: [{id:1},{id:2},{id:3}],   //array of numbers
+
+    approach: '',
+    backgroundInfo: '',
+    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
+}];
+
 
 app.get('/', function(req, res){
   res.send('hello world');
@@ -75,6 +113,22 @@ app.get('/', function(req, res){
 
 app.get('/drafts', function(req, res) {
     res.send({'drafts':drafts});
+});
+
+app.get('/listings/:id', function(req, res) {
+    var id = _.parseInt(req.params.id);
+
+    var listing = _.find(listings, {'id': id});
+
+    if (listing) {
+        res.send({
+            'draft': _.find(listings, {'id': id})
+        });
+    } else {
+        res.status(404);
+        res.send();
+    }
+
 });
 
 app.get('/drafts/:id', function(req, res) {
