@@ -150,7 +150,7 @@ app.get('/drafts/:id', function(req, res) {
 });
 
 app.put('/drafts/:id', function(req, res){
-    var id = _.parseInt(req.param('id'));
+    var id = _.parseInt(req.params.id);
 
     var draftToUpdate = _.find(drafts, {'id': id});
     var draft = req.body.draft;
@@ -297,7 +297,6 @@ app.get('/specializations-skills-languages', function(req, res){
                 'value': 'Latin'
             }]
     }
-
     res.send(response);
 });
 
