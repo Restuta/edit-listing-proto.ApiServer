@@ -112,44 +112,28 @@ app.get('/', function(req, res){
   res.send('hello world');
 });
 
-app.get('/drafts', function(req, res) {
-    res.status(401);
-    res.send({'drafts':drafts});
+
+app.get('/listings/drafts', function(req, res) {
+    //res.status(401);
+    res.send({'listingDrafts':drafts});
 });
 
-app.get('/listings/:id', function(req, res) {
-    var id = _.parseInt(req.params.id);
-
-    var listing = _.find(listings, {'id': id});
-
-    if (listing) {
-        res.send({
-            'listing': _.find(listings, {'id': id})
-        });
-    } else {
-        res.status(404);
-        res.send();
-    }
-
-});
-
-app.get('/drafts/:id', function(req, res) {
+app.get('/listings/drafts/:id', function(req, res) {
     var id = _.parseInt(req.params.id);
 
     var draft = _.find(drafts, {'id': id});
 
     if (draft) {
         res.send({
-            'draft': _.find(drafts, {'id': id})
+            'listingDraft': _.find(drafts, {'id': id})
         });
     } else {
-        res.status(404);
-        res.send();   
+        res.status(404).send();   
     }
     
 });
 
-app.put('/drafts/:id', function(req, res){
+app.put('/listings/drafts/:id', function(req, res){
     var id = _.parseInt(req.params.id);
 
     var draftToUpdate = _.find(drafts, {'id': id});
@@ -157,10 +141,11 @@ app.put('/drafts/:id', function(req, res){
 
     _.merge(draftToUpdate, draft);
 
-    res.status(200).send({'draft' : draftToUpdate});
+    //res.status(500);
+    res.send({'listingDraft' : draftToUpdate});
 });
 
-app.post('/drafts', function(req, res) {
+app.post('/listings/drafts', function(req, res) {
 
     var lastDraft = _.max(drafts, function(draft) {
         return draft.id;
@@ -180,8 +165,27 @@ app.post('/drafts', function(req, res) {
     }
 
     drafts.push(newDraft);
-    res.status(201).send({'draft': newDraft });     
+    res.status(201);
+    res.send({'listingDraft': newDraft });     
 });
+
+
+app.get('/listings/:id', function(req, res) {
+    var id = _.parseInt(req.params.id);
+
+    var listing = _.find(listings, {'id': id});
+
+    if (listing) {
+        res.send({
+            'listing': _.find(listings, {'id': id})
+        });
+    } else {
+        res.status(404);
+        res.send();
+    }
+
+});
+
 
 
 app.get('/listing-categories', function(req, res) {
