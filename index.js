@@ -30,19 +30,28 @@ app.use(function(req, res, next) {
     next();
 })
 
-var drafts = [{
+ var drafts = [
+ {
     id: 1,
-    primaryPhoneNumber: '4259999989',
+    primaryPhoneNumber: {
+        type:0,
+        countryCode:0,
+        number:4259999610,
+        extension:null,
+        areaCode:null,
+        isPrimary:true,
+        formattedNumber:null
+    },
     categoryId: 642,
     chatEnabled: true,
     minuteRate: 2.99,
-    supportBonus: true,
+    tippingEnabled: true,
 
     title: 'Sample title1',
     advisorName: 'James Bond',
     salesPitch: 'Sample sales pitch 1',
     //use HTML from http://www.keen.com/psychic-readings/love-relationships/mignon-divine-medium/6604438 as a test =)
-    profileImage: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
+    profilePicture: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
 
     //todo:
     specializedSituations: [{id:1},{id:2}],   //array of numbers
@@ -50,11 +59,30 @@ var drafts = [{
     languages: [{id:1},{id:2},{id:3}],   //array of numbers
 
     approach: 'My sample approach',
-    backgroundInfo: 'My background info',
+    background: 'My background info',
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-}, {
+}
+// {
+//     "status":1,
+//     "title":null,"HTMLDescription":null,"salesPitch":null,"approach":null,"background":null,"advisorId":0,
+//     "primaryPhoneNumber":{"type":0,"countryCode":-1,"number":4259999610,"extension":null,"areaCode":null,
+//     "isPrimary":true,"formattedNumber":null},
+//     "domainId":1,"listingTypeId":0,"categoryId":0,"minuteRate":0.0000,
+//     "chatEnabled":false,"videoChatEnabled":false,"systemOfferEnabled":false,"tippingEnabled":false,"profilePicture":null,
+//     "specializedSituations":[],"skills":[],"languages":[],"id":1,"createdDate":"2015-02-23T15:38:17.367",
+//     "lastUpdatedDate":"2015-02-23T15:38:17.367"
+// }
+, {
     id: 2,
-    primaryPhoneNumber: '(425) 999-99-89',
+    primaryPhoneNumber: {
+        type:0,
+        countryCode:0,
+        number:4259999989,
+        extension:null,
+        areaCode:null,
+        isPrimary:true,
+        formattedNumber:null
+    },
     categoryId: 642,
     advisorName: 'Muthu Vynogradenko',
     title: '',
@@ -65,7 +93,7 @@ var drafts = [{
     // languages: [{id:1},{id:2},{id:3}],   //array of numbers
 
     approach: '',
-    backgroundInfo: '',
+    background: '',
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }];
 
@@ -75,12 +103,12 @@ var listings = [{
     categoryId: 642,
     chatEnabled: true,
     minuteRate: 2.99,
-    supportBonus: true,
+    tippingEnabled: true,
 
     title: 'Sample title1',
     advisorName: 'James Bond',
     salesPitch: 'Sample sales pitch 1',
-    profileImage: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
+    profilePicture: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
 
     //todo:
     specializedSituations: [{id:1},{id:2}],   //array of numbers
@@ -88,7 +116,7 @@ var listings = [{
     languages: [{id:1},{id:2},{id:3}],   //array of numbers
 
     approach: 'My sample approach',
-    backgroundInfo: 'My background info',
+    background: 'My background info',
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }, {
     id: 2,
@@ -103,7 +131,7 @@ var listings = [{
     // languages: [{id:1},{id:2},{id:3}],   //array of numbers
 
     approach: '',
-    backgroundInfo: '',
+    background: '',
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }];
 
