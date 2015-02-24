@@ -25,8 +25,8 @@ app.use(logger); //custom logger to log all requests made to console
 //CORS
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-EpcApi-ID');
     next();
 })
 
@@ -115,7 +115,7 @@ app.get('/', function(req, res){
 
 app.get('/listings/drafts', function(req, res) {
     //res.status(401);
-    res.send({'listingDrafts':drafts});
+    res.send({'listing-drafts':drafts});
 });
 
 app.get('/listings/drafts/:id', function(req, res) {
@@ -125,7 +125,7 @@ app.get('/listings/drafts/:id', function(req, res) {
 
     if (draft) {
         res.send({
-            'listingDraft': _.find(drafts, {'id': id})
+            'listing-draft': _.find(drafts, {'id': id})
         });
     } else {
         res.status(404).send();   
@@ -142,7 +142,7 @@ app.put('/listings/drafts/:id', function(req, res){
     _.merge(draftToUpdate, draft);
 
     //res.status(500);
-    res.send({'listingDraft' : draftToUpdate});
+    res.send({'listing-draft' : draftToUpdate});
 });
 
 app.post('/listings/drafts', function(req, res) {
@@ -166,7 +166,7 @@ app.post('/listings/drafts', function(req, res) {
 
     drafts.push(newDraft);
     res.status(201);
-    res.send({'listingDraft': newDraft });     
+    res.send({'listing-draft': newDraft });     
 });
 
 
