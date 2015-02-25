@@ -1,18 +1,33 @@
 var chalk = require('chalk');
+var util = require('util') //node utils
 
 var lastApiCallDate = null;
 var options = {
     apiLatency: 0,
-    groupRequestsMadeInBetween: 200 //will group requests made in between 200ms by default
+    groupRequestsMadeInBetween: 200, //will group requests made in between 200ms by default
+    logBody: false
 };
 
+var logJson = function(object) {
+    var json = util.inspect(object, {
+        depth: 2,
+        colors: true
+    }).trim();
+
+    if (json != '{}' && json != '' && json != 'undefined' && typeof json != 'undefined') {
+        process.stdout.write(chalk.white(json) + '\n');    
+    }
+};
+
+function isEmpty(obj) {
+  return !Object.keys(obj).length;
+}
 
 module.exports = function(request, response, next){
     var start  = +new Date(); //+ converts date to milliseconds
     var stream = process.stdout;
     var url = request.url;
     var method = request.method;
-    
 
     response.on('finish', function(){
         var status = response.statusCode;
@@ -56,6 +71,9 @@ module.exports = function(request, response, next){
 
         lastApiCallDate = +new Date();
 
+        if (options.logBody && !isEmpty(request.body)) {
+            logJson(request.body);    
+        }
     })
 
     setTimeout(function() {
@@ -75,6 +93,10 @@ module.exports.setOptions = function(configOptions) {
         options.groupRequestsMadeInBetween = options.apiLatency > 0 
             ? options.apiLatency + defaultGroupingTime
             : defaultGroupingTime; 
+    }
+
+    if (configOptions.logBody && configOptions.logBody === true) {
+        options.logBody = true;
     }
     
 }
