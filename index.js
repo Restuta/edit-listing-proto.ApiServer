@@ -6,14 +6,29 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , argv = require('minimist')(process.argv.slice(2))
     , chalk = require('chalk')
+    , util = require('util') //node utils
     ;
 
 var port = 3008;
 
 logger.setOptions({
     apiLatency: argv.latency,
-    groupRequestsMadeInBetween: argv.grouping
+    groupRequestsMadeInBetween: argv.grouping,
+    logBody: argv.logBody
 });
+
+//logging syntax sugar
+var log = console.log.bind(console);
+
+
+var json = function(object) {
+    var json = util.inspect(object, {
+        depth: 2,
+        colors: true
+    });
+    log(chalk.white(json));
+};
+
 
 var apiLatency = argv.latency || 0;
 var grouping = argv.grouping || 200;
@@ -143,7 +158,7 @@ app.get('/', function(req, res){
 
 app.get('/listings/drafts', function(req, res) {
     //res.status(401);
-    res.send({'listing-drafts':drafts});
+    res.send({'listingDrafts' : drafts});
 });
 
 app.get('/listings/drafts/:id', function(req, res) {
@@ -153,7 +168,7 @@ app.get('/listings/drafts/:id', function(req, res) {
 
     if (draft) {
         res.send({
-            'listing-draft': _.find(drafts, {'id': id})
+            'listingDraft': _.find(drafts, {'id': id})
         });
     } else {
         res.status(404).send();   
@@ -165,12 +180,12 @@ app.put('/listings/drafts/:id', function(req, res){
     var id = _.parseInt(req.params.id);
 
     var draftToUpdate = _.find(drafts, {'id': id});
-    var draft = req.body.draft;
+    var draft = req.body.listingDraft;
 
     _.merge(draftToUpdate, draft);
 
     //res.status(500);
-    res.send({'listing-draft' : draftToUpdate});
+    res.send({'listingDraft' : draftToUpdate});
 });
 
 app.post('/listings/drafts', function(req, res) {
@@ -194,7 +209,7 @@ app.post('/listings/drafts', function(req, res) {
 
     drafts.push(newDraft);
     res.status(201);
-    res.send({'listing-draft': newDraft });     
+    res.send({'listingDraft': newDraft });     
 });
 
 
@@ -213,7 +228,6 @@ app.get('/listings/:id', function(req, res) {
     }
 
 });
-
 
 
 app.get('/listing-categories', function(req, res) {
