@@ -6,7 +6,6 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , argv = require('minimist')(process.argv.slice(2))
     , chalk = require('chalk')
-    , util = require('util') //node utils
     ;
 
 var port = 3008;
@@ -24,17 +23,17 @@ var log = console.log.bind(console);
 var apiLatency = argv.latency || 0;
 var grouping = argv.grouping || 200;
 
-//to parse json from incoming requests to req.body
-app.use(bodyParser.json());
-app.use(logger); //custom logger to log all requests made to console
-
-//CORS
-app.use(function(req, res, next) {
+var corsSettings = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-EpcApi-ID');
     next();
-})
+};
+
+//to parse json from incoming requests to req.body
+app.use(bodyParser.json());
+app.use(logger); //custom logger to log all requests made to console
+app.use(corsSettings); //allowing cross-domain requests
 
  var drafts = [
  {"status":1,"title":null,"HTMLDescription":null,"salesPitch":null,"approach":null,"background":null,
@@ -151,7 +150,6 @@ app.get('/', function(req, res){
 
 
 app.get('/listings/drafts', function(req, res) {
-    //res.status(401);
     res.send({'listingDrafts' : drafts});
 });
 
@@ -264,12 +262,8 @@ app.get('/listing-categories', function(req, res) {
 
 app.get('/specializations-skills-languages', function(req, res){
     var response = {
-        'specializations' : [{
-                'id': 1,
-                'value': 'spec1'
-            },{
-                'id': 2,
-                'value': 'spec2'
+        'specializations' : [{'id': 1,'value': 'spec1'},{
+            'id': 2,'value': 'spec2'
             },{
                 'id': 3,
                 'value': 'spec3'
