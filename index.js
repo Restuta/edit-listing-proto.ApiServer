@@ -21,15 +21,6 @@ logger.setOptions({
 var log = console.log.bind(console);
 
 
-var json = function(object) {
-    var json = util.inspect(object, {
-        depth: 2,
-        colors: true
-    });
-    log(chalk.white(json));
-};
-
-
 var apiLatency = argv.latency || 0;
 var grouping = argv.grouping || 200;
 
