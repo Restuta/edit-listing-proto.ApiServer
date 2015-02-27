@@ -46,6 +46,11 @@ app.use(function(req, res, next) {
 })
 
  var drafts = [
+ {"status":1,"title":null,"HTMLDescription":null,"salesPitch":null,"approach":null,"background":null,
+ "primaryPhoneNumber":{"type":-1,"countryCode":-1,"number":null,"extension":null,"areaCode":null,"isPrimary":false,"formattedNumber":null},
+ "domainId":1,"ListingType":0,"categoryId":0,"minuteRate":0.0000,"chatEnabled":false,"videoChatEnabled":false,"systemOfferEnabled":false,
+ "tippingEnabled":false,"profilePicture":null,"specializedSituations":[],"skills":[],"languages":[],"id":713},
+
  {
     id: 1,
     primaryPhoneNumber: {
@@ -77,16 +82,6 @@ app.use(function(req, res, next) {
     background: 'My background info',
     HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
 }
-// {
-//     "status":1,
-//     "title":null,"HTMLDescription":null,"salesPitch":null,"approach":null,"background":null,"advisorId":0,
-//     "primaryPhoneNumber":{"type":0,"countryCode":-1,"number":4259999610,"extension":null,"areaCode":null,
-//     "isPrimary":true,"formattedNumber":null},
-//     "domainId":1,"listingTypeId":0,"categoryId":0,"minuteRate":0.0000,
-//     "chatEnabled":false,"videoChatEnabled":false,"systemOfferEnabled":false,"tippingEnabled":false,"profilePicture":null,
-//     "specializedSituations":[],"skills":[],"languages":[],"id":1,"createdDate":"2015-02-23T15:38:17.367",
-//     "lastUpdatedDate":"2015-02-23T15:38:17.367"
-// }
 , {
     id: 2,
     primaryPhoneNumber: {
@@ -114,7 +109,15 @@ app.use(function(req, res, next) {
 
 var listings = [{
     id: 1,
-    primaryPhoneNumber: '4259999989',
+    primaryPhoneNumber: {
+        type:0,
+        countryCode:0,
+        number:4259999610,
+        extension:null,
+        areaCode:null,
+        isPrimary:true,
+        formattedNumber:null
+    },
     categoryId: 642,
     chatEnabled: true,
     minuteRate: 2.99,
@@ -171,7 +174,7 @@ app.get('/listings/drafts/:id', function(req, res) {
             'listingDraft': _.find(drafts, {'id': id})
         });
     } else {
-        res.status(404).send();   
+        res.status(404).send();
     }
     
 });
