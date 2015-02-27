@@ -10,7 +10,7 @@ var options = {
 
 var logJson = function(object) {
     var json = util.inspect(object, {
-        depth: 2,
+        depth: 3,
         colors: true
     }).trim();
 
