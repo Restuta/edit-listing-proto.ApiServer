@@ -6,6 +6,7 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , argv = require('minimist')(process.argv.slice(2))
     , chalk = require('chalk')
+    , db = require('./db') //file-based storage of fake api data
     ;
 
 var port = 3008;
@@ -18,7 +19,6 @@ logger.setOptions({
 
 //logging syntax sugar
 var log = console.log.bind(console);
-
 
 var apiLatency = argv.latency || 0;
 var grouping = argv.grouping || 200;
@@ -224,37 +224,7 @@ app.get('/listings/:id', function(req, res) {
 
 app.get('/listing-categories', function(req, res) {
     var response = {
-        'listingCategories' : [
-            {'id':589,'name':'Dream Interpretation','parentId':198},
-            {'id':636,'name':'Life Questions','parentId':198},
-            {'id':637,'name':'Otherworld Connections','parentId':198},
-            {'id':642,'name':'Pet Psychics','parentId':198},
-            {'id':705,'name':'Financial Outlook','parentId':198},
-            {'id':754,'name':'Psychic Mediums','parentId':198},
-            {'id':758,'name':'Recorded Forecasts','parentId':196},
-            {'id':764,'name':'Astrologers','parentId':196},
-            {'id':765,'name':'Chinese Astrologers','parentId':196},
-            {'id':801,'name':'Straight Females','parentId':800},
-            {'id':802,'name':'Straight Males','parentId':800},
-            {'id':803,'name':'Gay Males','parentId':800},
-            {'id':804,'name':'Lesbians','parentId':800},
-            {'id':15890,'name':'Mayan Astrology','parentId':196},
-            {'id':15891,'name':'Vedic Astrology','parentId':196},
-            {'id':15892,'name':'Feng Shui','parentId':198},
-            {'id':15893,'name':'Numerology','parentId':198},
-            {'id':200,'name':'Spiritual Readings','parentId':195},
-            {'id':867,'name':'Psíquicos','parentId':195},
-            {'id':211,'name':'Social/Entertainment','parentId':1},
-            {'id':202,'name':'Other','parentId':195},
-            {'id':198,'name':'Psychics','parentId':195},
-            {'id':588,'name':'Tarot Readers','parentId':195},
-            {'id':215,'name':'Friends','parentId':211},
-            {'id':195,'name':'Psychic Readings','parentId':1},
-            {'id':800,'name':'Flirting','parentId':211},
-            {'id':693,'name':'Celebrity Models','parentId':211},
-            {'id':635,'name':'Love & Relationships','parentId':195},
-            {'id':196,'name':'Astrology Readings','parentId':195}
-        ]
+        'listingCategories' : db.listing.categories
     };
 
     res.send(response);
@@ -262,74 +232,9 @@ app.get('/listing-categories', function(req, res) {
 
 app.get('/specializations-skills-languages', function(req, res){
     var response = {
-        'specializations' : [{'id': 1,'value': 'spec1'},{
-            'id': 2,'value': 'spec2'
-            },{
-                'id': 3,
-                'value': 'spec3'
-            },{
-                'id': 4,
-                'value': 'spec4'
-            },{
-                'id': 5,
-                'value': 'spec5'
-            }],
-        'skills' : [{
-                'id': 1,
-                'value': 'Angel readings'
-            },{
-                'id': 2,
-                'value': 'Chinese astrology'
-            },{
-                'id': 3,
-                'value': 'Mayan astrology'
-            },{
-                'id': 4,
-                'value': 'Veidc astrology'
-            },{
-                'id': 5,
-                'value': 'Channelling'
-            },{
-                'id': 6,
-                'value': 'Clairaudient'
-            },{
-                'id': 7,
-                'value': 'Clairsentient'
-            },{
-                'id': 8,
-                'value': 'Clairvoyant'
-            },{
-                'id': 9,
-                'value': 'Crystals'
-            },{
-                'id': 10,
-                'value': 'Dream Interpretation'
-            },{
-                'id': 11,
-                'value': 'Empath'
-            },{
-                'id': 12,
-                'value': 'Feng Shui'
-            },{
-                'id': 13,
-                'value': 'I-Ching'
-            }],
-        'languages' : [{
-                'id': 1,
-                'value': 'English'
-            },{
-                'id': 2,
-                'value': 'Ukrainian'
-            },{
-                'id': 3,
-                'value': 'Sanskrit'
-            },{
-                'id': 4,
-                'value': 'French'
-            },{
-                'id': 5,
-                'value': 'Latin'
-            }]
+        'specializations' : db.listing.specializations,
+        'skills' : db.listing.skills,
+        'languages' : db.listing.languages
     }
     res.send(response);
 });
