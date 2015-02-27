@@ -35,114 +35,6 @@ app.use(bodyParser.json());
 app.use(logger); //custom logger to log all requests made to console
 app.use(corsSettings); //allowing cross-domain requests
 
- var drafts = [
- {"status":1,"title":null,"HTMLDescription":null,"salesPitch":null,"approach":null,"background":null,
- "primaryPhoneNumber":{"type":-1,"countryCode":-1,"number":null,"extension":null,"areaCode":null,"isPrimary":false,"formattedNumber":null},
- "domainId":1,"ListingType":0,"categoryId":0,"minuteRate":0.0000,"chatEnabled":false,"videoChatEnabled":false,"systemOfferEnabled":false,
- "tippingEnabled":false,"profilePicture":null,"specializedSituations":[],"skills":[],"languages":[],"id":713},
-
- {
-    id: 1,
-    primaryPhoneNumber: {
-        type:0,
-        countryCode:0,
-        number:4259999610,
-        extension:null,
-        areaCode:null,
-        isPrimary:true,
-        formattedNumber:null
-    },
-    categoryId: 642,
-    chatEnabled: true,
-    minuteRate: 2.99,
-    tippingEnabled: true,
-
-    title: 'Sample title1',
-    advisorName: 'James Bond',
-    salesPitch: 'Sample sales pitch 1',
-    //use HTML from http://www.keen.com/psychic-readings/love-relationships/mignon-divine-medium/6604438 as a test =)
-    profilePicture: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
-
-    //todo:
-    specializedSituations: [{id:1},{id:2}],   //array of numbers
-    skills: [{id:1},{id:6},{id:12}],  //array of numbers
-    languages: [{id:1},{id:2},{id:3}],   //array of numbers
-
-    approach: 'My sample approach',
-    background: 'My background info',
-    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-}
-, {
-    id: 2,
-    primaryPhoneNumber: {
-        type:0,
-        countryCode:0,
-        number:4259999989,
-        extension:null,
-        areaCode:null,
-        isPrimary:true,
-        formattedNumber:null
-    },
-    categoryId: 642,
-    advisorName: 'Muthu Vynogradenko',
-    title: '',
-
-    //todo:
-    // specializedSituations: [{id:1},{id:2}],   //array of numbers
-    // skills: [{id:1},{id:6},{id:12}],  //array of numbers
-    // languages: [{id:1},{id:2},{id:3}],   //array of numbers
-
-    approach: '',
-    background: '',
-    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-}];
-
-var listings = [{
-    id: 1,
-    primaryPhoneNumber: {
-        type:0,
-        countryCode:0,
-        number:4259999610,
-        extension:null,
-        areaCode:null,
-        isPrimary:true,
-        formattedNumber:null
-    },
-    categoryId: 642,
-    chatEnabled: true,
-    minuteRate: 2.99,
-    tippingEnabled: true,
-
-    title: 'Sample title1',
-    advisorName: 'James Bond',
-    salesPitch: 'Sample sales pitch 1',
-    profilePicture: 'http://imgupload.dev.ingenio.com/ad-products.cdn.originalmemberphotos/22768920-2133904112.jpg',
-
-    //todo:
-    specializedSituations: [{id:1},{id:2}],   //array of numbers
-    skills: [{id:1},{id:6},{id:12}],  //array of numbers
-    languages: [{id:1},{id:2},{id:3}],   //array of numbers
-
-    approach: 'My sample approach',
-    background: 'My background info',
-    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-}, {
-    id: 2,
-    primaryPhoneNumber: '(425) 999-99-89',
-    categoryId: 642,
-    advisorName: 'Muthu Vynogradenko',
-    title: '',
-
-    //todo:
-    // specializedSituations: [{id:1},{id:2}],   //array of numbers
-    // skills: [{id:1},{id:6},{id:12}],  //array of numbers
-    // languages: [{id:1},{id:2},{id:3}],   //array of numbers
-
-    approach: '',
-    background: '',
-    HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-}];
-
 
 app.get('/', function(req, res){
   res.send('hello world');
@@ -150,17 +42,17 @@ app.get('/', function(req, res){
 
 
 app.get('/listings/drafts', function(req, res) {
-    res.send({'listingDrafts' : drafts});
+    res.send({'listingDrafts' : db.listing.drafts});
 });
 
 app.get('/listings/drafts/:id', function(req, res) {
     var id = _.parseInt(req.params.id);
 
-    var draft = _.find(drafts, {'id': id});
+    var draft = _.find(db.listing.drafts, {'id': id});
 
     if (draft) {
         res.send({
-            'listingDraft': _.find(drafts, {'id': id})
+            'listingDraft': _.find(db.listing.drafts, {'id': id})
         });
     } else {
         res.status(404).send();
@@ -171,7 +63,7 @@ app.get('/listings/drafts/:id', function(req, res) {
 app.put('/listings/drafts/:id', function(req, res){
     var id = _.parseInt(req.params.id);
 
-    var draftToUpdate = _.find(drafts, {'id': id});
+    var draftToUpdate = _.find(db.listing.drafts, {'id': id});
     var draft = req.body.listingDraft;
 
     _.merge(draftToUpdate, draft);
@@ -199,7 +91,7 @@ app.post('/listings/drafts', function(req, res) {
         HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
     }
 
-    drafts.push(newDraft);
+    db.listing.drafts.push(newDraft);
     res.status(201);
     res.send({'listingDraft': newDraft });     
 });
@@ -208,11 +100,11 @@ app.post('/listings/drafts', function(req, res) {
 app.get('/listings/:id', function(req, res) {
     var id = _.parseInt(req.params.id);
 
-    var listing = _.find(listings, {'id': id});
+    var listing = _.find(db.listings, {'id': id});
 
     if (listing) {
         res.send({
-            'listing': _.find(listings, {'id': id})
+            'listing': _.find(db.listings, {'id': id})
         });
     } else {
         res.status(404);

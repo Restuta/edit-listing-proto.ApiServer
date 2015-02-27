@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 module.exports = [
     { 'id': 589, 'name': 'Dream Interpretation', 'parentId': 198 },
     { 'id': 636, 'name': 'Life Questions', 'parentId': 198 },

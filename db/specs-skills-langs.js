@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 module.exports = {
     specializations: [
         { 'id': 1, 'value': 'Love & Relationships' },
