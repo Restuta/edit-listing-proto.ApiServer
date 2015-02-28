@@ -34,70 +34,67 @@ var corsSettings = function(req, res, next) {
 app.use(bodyParser.json());
 app.use(logger); //custom logger to log all requests made to console
 app.use(corsSettings); //allowing cross-domain requests
+app.use(router);
 
-
-app.get('/', function(req, res){
+router.get('/', function(req, res){
   res.send('hello world');
-});
+})
 
-
-app.get('/listings/drafts', function(req, res) {
-    res.send({'listingDrafts' : db.listing.drafts});
-});
-
-app.get('/listings/drafts/:id', function(req, res) {
-    var id = _.parseInt(req.params.id);
-
-    var draft = _.find(db.listing.drafts, {'id': id});
-
-    if (draft) {
-        res.send({
-            'listingDraft': _.find(db.listing.drafts, {'id': id})
-        });
-    } else {
-        res.status(404).send();
-    }
-    
-});
-
-app.put('/listings/drafts/:id', function(req, res){
-    var id = _.parseInt(req.params.id);
-
-    var draftToUpdate = _.find(db.listing.drafts, {'id': id});
-    var draft = req.body.listingDraft;
-
-    _.merge(draftToUpdate, draft);
-
-    //res.status(500);
-    res.send({'listingDraft' : draftToUpdate});
-});
-
-app.post('/listings/drafts', function(req, res) {
-
-    var lastDraft = _.max(drafts, function(draft) {
-        return draft.id;
+router.route('/listings/drafts')
+    .get(function(req, res) {
+        res.send({'listingDrafts' : db.listing.drafts});
     })
+    .post(function(req, res) {
 
-    var newId = lastDraft.id + 1;
+        var lastDraft = _.max(db.listing.drafts, function(draft) {
+            return draft.id;
+        })
 
-    var newDraft = {
-        id: newId,
-        primaryPhoneNumber: '(425) 999-99-89',
-        categoryId: 0,
-        advisorName: 'Boris Shumyater',
-        title: '',
-        approach: '',
-        backgroundInfo: '',
-        HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
-    }
+        var newId = lastDraft.id + 1;
 
-    db.listing.drafts.push(newDraft);
-    res.status(201);
-    res.send({'listingDraft': newDraft });     
-});
+        var newDraft = {
+            id: newId,
+            primaryPhoneNumber: '(425) 999-99-89',
+            categoryId: 0,
+            advisorName: 'Boris Shumyater',
+            title: '',
+            approach: '',
+            backgroundInfo: '',
+            HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
+        }
 
+        db.listing.drafts.push(newDraft);
+        res.status(201);
+        res.send({'listingDraft': newDraft });     
+    });
 
-app.get('/listings/:id', function(req, res) {
+router.route('/listings/drafts/:id')
+    .get(function(req, res) {
+        var id = _.parseInt(req.params.id);
+
+        var draft = _.find(db.listing.drafts, {'id': id});
+
+        if (draft) {
+            res.send({
+                'listingDraft': _.find(db.listing.drafts, {'id': id})
+            });
+        } else {
+            res.status(404).send();
+        }
+        
+    })
+    .put(function(req, res){
+        var id = _.parseInt(req.params.id);
+
+        var draftToUpdate = _.find(db.listing.drafts, {'id': id});
+        var draft = req.body.listingDraft;
+
+        _.merge(draftToUpdate, draft);
+
+        res.send({'listingDraft' : draftToUpdate});
+    });
+
+router.get('/listings/:id', function(req, res) {
     var id = _.parseInt(req.params.id);
 
     var listing = _.find(db.listings, {'id': id});
@@ -114,7 +111,7 @@ app.get('/listings/:id', function(req, res) {
 });
 
 
-app.get('/listing-categories', function(req, res) {
+router.get('/listing-categories', function(req, res) {
     var response = {
         'listingCategories' : db.listing.categories
     };
@@ -122,7 +119,7 @@ app.get('/listing-categories', function(req, res) {
     res.send(response);
 });
 
-app.get('/specializations-skills-languages', function(req, res){
+router.get('/specializations-skills-languages', function(req, res){
     var response = {
         'specializations' : db.listing.specializations,
         'skills' : db.listing.skills,
@@ -131,7 +128,7 @@ app.get('/specializations-skills-languages', function(req, res){
     res.send(response);
 });
 
-app.get('/domain-info', function(req, res){
+router.get('/domain-info', function(req, res){
     var response = { 
         'domainInfo': {
             'connectionCharges' : 0.2,
