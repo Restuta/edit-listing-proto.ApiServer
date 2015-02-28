@@ -94,21 +94,59 @@ router.route('/listings/drafts/:id')
         res.send({'listingDraft' : draftToUpdate});
     });
 
-router.get('/listings/:id', function(req, res) {
-    var id = _.parseInt(req.params.id);
+router.route('/listings')
+    .get(function (req, res) {
+        res.send({ 'listings': db.listings });
+    })
+    .post(function (req, res) {
+        var listing = req.body.listing;
 
-    var listing = _.find(db.listings, {'id': id});
+        var lastListing = _.max(db.listings, function(listing) {
+            return listing.id;
+        })
 
-    if (listing) {
-        res.send({
-            'listing': _.find(db.listings, {'id': id})
-        });
-    } else {
-        res.status(404);
-        res.send();
-    }
+        var newId = lastListing.id + 1;
 
-});
+        var newListing = {
+            id: newId,
+            primaryPhoneNumber: '(425) 999-99-89',
+            categoryId: 0,
+            advisorName: 'Boris Shumyater',
+            title: '',
+            approach: '',
+            backgroundInfo: '',
+            HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
+        }
+
+        db.listings.push(newListing);
+
+        res.status(201).send({ 'listing': newListing });
+    });
+
+router.route('/listings/:id')
+    .get(function(req, res) {
+        var id = _.parseInt(req.params.id);
+
+        var listing = _.find(db.listings, {'id': id});
+
+        if (listing) {
+            res.send({
+                'listing': _.find(db.listings, {'id': id})
+            });
+        } else {
+            res.status(404).send();
+        }
+    })
+    .put(function (req, res) {
+        var id = _.parseInt(req.params.id);
+
+        var listingToUpdate = _.find(db.listings, {'id': id});
+        var listing = req.body.listing;
+
+        _.merge(listingToUpdate, listing);
+
+        res.send({ 'listing': listingToUpdate });
+    });
 
 
 router.get('/listing-categories', function(req, res) {
