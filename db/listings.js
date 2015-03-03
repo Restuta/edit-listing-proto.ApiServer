@@ -44,7 +44,7 @@ module.exports = [{
           alternateText: null
           },
         isAssociatedWithService: true
-    }
+    },
     categoryId: 642,
     chatEnabled: true,
     minuteRate: 2.99,
@@ -111,7 +111,7 @@ module.exports = [{
           alternateText: null
           },
         isAssociatedWithService: true
-    }
+    },
     categoryId: 642,
     advisorName: 'Muthu Vynogradenko',
     title: '',
