@@ -21,7 +21,51 @@ router.route('/listings/drafts')
 
         var newDraft = {
             id: newId,
-            primaryPhoneNumber: '(425) 999-99-89',
+            primaryPhoneNumber: {
+                type: 0,
+                countryCode: 0,
+                number: 0,
+                extension: null,
+                areaCode: null,
+                isPrimary: true,
+                formattedNumber: null
+            },
+            profilePicture:{
+                id: 0,
+                primaryVersion: {
+                  fileName: null,
+                  directoryName: null,
+                  url: null,
+                  width: 0,
+                  height: 0,
+                  alternateText: null
+                  },
+                originalVersion: {
+                  fileName: null,
+                  directoryName: null,
+                  url: null,
+                  width: 0,
+                  height: 0,
+                  alternateText: null
+                  },
+                thumbnailVersion: {
+                  fileName: null,
+                  directoryName: null,
+                  url: null,
+                  width: 0,
+                  height: 0,
+                  alternateText: null
+                  },
+                size75Version: {
+                  fileName: null,
+                  directoryName: null,
+                  url: null,
+                  width: 0,
+                  height: 0,
+                  alternateText: null
+                  },
+                isAssociatedWithService: false
+            },
             categoryId: 0,
             advisorName: 'Boris Shumyater',
             title: '',
