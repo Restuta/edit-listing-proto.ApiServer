@@ -188,4 +188,12 @@ router.get('/domain-info', function(req, res){
     res.send(response);
 });
 
+
+router.route('/pictures')
+    .post(function (req, res) {
+        var uploadedPicture = _.find(db.pictures, {'id': 8989});
+
+        res.send(uploadedPicture);
+    });
+
 module.exports = router;

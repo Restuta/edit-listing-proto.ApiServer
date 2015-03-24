@@ -4,7 +4,10 @@ listing.drafts = require('./listing-drafts')
 
 var listings = require('./listings');
 
+var pictures = require('./pictures')
+
 module.exports = {
     listing : listing,
-    listings : listings
+    listings : listings,
+    pictures : pictures
 }
