@@ -12,7 +12,6 @@ router.route('/listings/drafts')
         res.send({'listingDrafts' : db.listing.drafts});
     })
     .post(function(req, res) {
-
         var lastDraft = _.max(db.listing.drafts, function(draft) {
             return draft.id;
         })
@@ -95,6 +94,7 @@ router.route('/listings/drafts/:id')
         
     })
     .put(function(req, res){
+        //return res.status(500).send('catxdfff');
         var id = _.parseInt(req.params.id);
 
         var draftToUpdate = _.find(db.listing.drafts, {'id': id});
@@ -110,28 +110,20 @@ router.route('/listings')
         res.send({ 'listings': db.listings });
     })
     .post(function (req, res) {
-        var listing = req.body.listing;
+        var draftId = req.body.listing.listingDraftId;
+        console.log(draftId);
 
-        var lastListing = _.max(db.listings, function(listing) {
-            return listing.id;
-        })
+        var newListingId = draftId;
+        var newListing = _.find(db.listing.drafts, {'id': draftId});
 
-        var newId = lastListing.id + 1;
-
-        var newListing = {
-            id: newId,
-            primaryPhoneNumber: '(425) 999-99-89',
-            categoryId: 0,
-            advisorName: 'Boris Shumyater',
-            title: '',
-            approach: '',
-            backgroundInfo: '',
-            HTMLDescription: '<marquee>This is how advisors have their html description. <b>Its all crazy</b></marquee>'
+        if (!newListing) {
+            return res.status(500).send({error:'Draft with id "' 
+                + newListingId + '"must be present to be able to create a listing.'});
         }
 
         db.listings.push(newListing);
 
-        res.status(201).send({ 'listing': newListing });
+        return res.status(201).send({ 'listing': newListing });
     });
 
 router.route('/listings/:id')
