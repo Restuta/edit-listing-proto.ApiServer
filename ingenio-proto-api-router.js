@@ -94,7 +94,7 @@ router.route('/listings/drafts/:id')
         
     })
     .put(function(req, res){
-        //return res.status(500).send('catxdfff');
+        //return res.status(401).send('Kitty is sad and wont authorize you');
         var id = _.parseInt(req.params.id);
 
         var draftToUpdate = _.find(db.listing.drafts, {'id': id});
@@ -187,5 +187,10 @@ router.route('/pictures')
 
         res.send(uploadedPicture);
     });
+
+router.route('/account/chargeaccounts')
+  .get(function(req, res) {
+      return res.status(200).send({});
+  })
 
 module.exports = router;

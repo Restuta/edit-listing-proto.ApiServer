@@ -23,12 +23,38 @@ module.exports = {
         { 'id': 13, 'value': 'I-Ching'}
     ],
 
-    languages: [
-        { 'id': 1, 'value': 'English' },
-        { 'id': 2, 'value': 'Ukrainian' },
-        { 'id': 3, 'value': 'Sanskrit' },
-        { 'id': 4, 'value': 'French' },
-        { 'id': 5, 'value': 'Latin'}
-    ]
+    languages:[
+        {"id":1,"value":"Arabic"},
+        {"id":2,"value":"Chinese(Cantonese)"},
+        {"id":3,"value":"Chinese(Mandarin)"},
+        {"id":4,"value":"Danish"},
+        {"id":5,"value":"Dutch"},
+        {"id":6,"value":"English"},
+        {"value":"Finnish","id":7},
+        {"value":"French","id":8},
+        {"value":"German","id":9},
+        {"value":"Hebrew","id":10},
+        {"value":"Italian","id":11},
+        {"value":"Japanese","id":12},
+        {"value":"Korean","id":13},
+        {"value":"Norwegian","id":14},
+        {"value":"Portuguese(BR)","id":15},
+        {"value":"Spanish","id":16},
+        {"value":"Swedish","id":17},
+        {"value":"Czech","id":101},
+        {"value":"Estonian","id":102},
+        {"value":"Farsi","id":103},
+        {"value":"Greek","id":104},
+        {"value":"Hindi","id":105},
+        {"value":"Hungarian","id":106},
+        {"value":"Latvian","id":107},
+        {"value":"Lithuanian","id":108},
+        {"value":"Polish","id":109},
+        {"value":"Romanian","id":110},
+        {"value":"Russian","id":111},
+        {"value":"Thai","id":112},
+        {"value":"Turkish","id":113},
+        {"value":"Other","id":114}
+     ]
 }
 
